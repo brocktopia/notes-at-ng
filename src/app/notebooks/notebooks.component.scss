@@ -1,0 +1,25 @@
+ul {
+  width: 100%;
+  margin: 0px;
+  text-align: left;
+}
+ul.notebooks li {
+  list-style: none;
+  width: 100%;
+  height: 50px;
+  padding: 0px 20px;
+  background-color: #dddddd;
+  border-top: 1px solid #ffffff;
+  border-bottom: 1px solid #999999;
+  line-height: 50px;
+  cursor: pointer;
+}
+ul.notebooks li:hover {
+  background-color: #eeeeee;
+}
+.notebook-date {
+  float: right;
+}
+.notebooks-message {
+  margin: 20px;
+}

@@ -1,0 +1,35 @@
+<div class="modal-mask">
+
+  <div class="modal-wrapper">
+
+    <div class="modal-container">
+
+      <div class="modal-header">
+        <h3>Nearby Places</h3>
+      </div>
+
+      <div class="modal-body">
+        <input [(ngModel)]="placeName" placeholder="Enter a place name" (input)="updatePlaceSearch(placeName)">
+        <ul class="place-list">
+          <li class="place" *ngFor="let place of places" (click)="onPlaceSelect(place)">
+            <img [src]="place.icon" width="25" height="25"/>
+            <span class="place-name">{{place.name}}</span>
+          </li>
+        </ul>
+        <p *ngIf="!places">Loading...</p>
+      </div>
+
+      <div class="modal-footer">
+        <button *ngIf="showMoreButton" class="modal-optional-botton" (click)="loadMore()">
+          More Results
+        </button>
+        <button class="modal-default-button" (click)="closeDialog()">
+          Cancel
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

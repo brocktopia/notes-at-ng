@@ -1,0 +1,15 @@
+.content {
+  padding: 20px;
+}
+.logo {
+  display: block;
+  margin: 30px auto;
+}
+.at-char {
+  color: #4e7eef;
+}
+.create-notebook {
+  display: block;
+  margin: 30px auto;
+  padding: 0.5rem 1.5rem;
+}

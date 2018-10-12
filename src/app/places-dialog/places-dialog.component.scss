@@ -1,0 +1,27 @@
+input {
+  width: 100%;
+}
+ul.place-list {
+  max-height: 540px;
+  margin: 10px 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+li.place {
+  height: 30px;
+  width: 100%;
+  cursor: pointer;
+  font-size: smaller;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+li.place img {
+  vertical-align: middle;
+  margin-right: 8px;
+}
+.modal-mask .modal-container {
+  width: 460px;
+  max-height: 720px;
+}

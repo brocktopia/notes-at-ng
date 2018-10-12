@@ -1,0 +1,73 @@
+<div class="app-container">
+
+  <header>
+    <h2 *ngIf="!!note">{{note.name}}</h2>
+    <span class="button-bar">
+        <button class="icon delete-note" (click)="deleteNote()"><svg><use xlink:href="assets/symbols.svg#delete-note">
+          <title>Delete Note</title>
+        </use></svg></button>
+        <button class="mobile-only icon edit-note" (click)="editNote('mobile')"><svg><use xlink:href="assets/symbols.svg#edit-note">
+          <title>Edit Note</title>
+        </use></svg></button>
+        <button class="desktop-only icon edit-note" (click)="editNote('desktop')"><svg><use xlink:href="assets/symbols.svg#edit-note">
+          <title>Edit Note</title>
+        </use></svg></button>
+        <button *ngIf="showNoteMap" class="icon show-note" (click)="showNote()"><svg><use xlink:href="assets/symbols.svg#note">
+          <title>Show Note</title>
+        </use></svg></button>
+        <button *ngIf="showNoteMap === false" class="icon show-map" (click)="showMap()"><svg><use xlink:href="assets/symbols.svg#map">
+          <title>Show Map</title>
+        </use></svg></button>
+        <button class="icon close-note" (click)="closeNote()"><svg><use xlink:href="assets/symbols.svg#close-note">
+          <title>Close Note</title>
+        </use></svg></button>
+      </span>
+  </header>
+
+  <div *ngIf="(!showNoteMap && note)" class="content">
+
+    <div class="date">{{ note.date | amDateFormat:'LLLL' }}</div>
+
+    <div class="geocoords" *ngIf="!!note.place && !!note.place.name">
+      <img [src]="note.place.icon" class="icon-tiny" />
+      <span id="placeName">{{note.place.name}}</span>
+      <a [href]="note.place.url" target="_blank" style="display: inline-block; vertical-align: middle;">
+        <svg class="icon-tiny"><use xlink:href="assets/symbols.svg#launch"></use></svg>
+      </a>
+    </div>
+
+    <div class="geocoords" *ngIf="!!note.geocode">
+      <a (click)="showMap()" class="geocords-link">
+        <svg class="icon-tiny" style="vertical-align: text-bottom;"><use xlink:href="assets/symbols.svg#my-location"></use></svg>
+        {{note.geocode.lat +', '+note.geocode.lng}}
+      </a>
+    </div>
+    <p class="note">{{note.note}}</p>
+  </div>
+
+  <app-note-map
+    *ngIf="showNoteMap"
+    [note]="note"
+  ></app-note-map>
+
+  <app-modal-dailog
+    *ngIf="showConfirmModal"
+    [modalType]="'confirm'"
+    (close)="showConfirmModal = false;"
+    (confirm)="confirmNoteDelete()"
+  >
+    <div class="modal-title">Confirm Note Delete</div>
+    <div class="modal-body">
+      Are you sure you want to delete this note? This can not be undone.
+    </div>
+  </app-modal-dailog>
+
+  <div class="navigation">
+    <a (click)="closeNote()" class="back2notebook">Back to Notebook</a>
+    <a *ngIf="noteCount > 1" style="float:right;" (click)="nextNote()">Next &gt;</a>
+    <a *ngIf="noteCount > 1" style="float:right;" (click)="previousNote()">&lt; Previous</a>
+  </div>
+
+  <div class="loading-mask" *ngIf="isLoading"><span>{{loadingMessage}}</span></div>
+
+</div>

@@ -1,0 +1,16 @@
+.error-msg {
+  text-align: center;
+  font-size: smaller;
+  b {
+    color: darkred;
+  }
+}
+.input-info {
+  font-size: smaller;
+  .char-count {
+    color: darkgreen;
+  }
+  .char-count-close {
+    color: orangered;
+  }
+}

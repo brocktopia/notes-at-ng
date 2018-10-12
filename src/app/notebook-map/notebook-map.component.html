@@ -1,0 +1,35 @@
+<div class="content">
+
+  <agm-map
+    class="content"
+    [zoom]="10"
+    (mapReady)="onMapReady($event)"
+  >
+    <agm-marker
+      *ngFor="let marker of noteMarkers"
+      [latitude]="marker.latitude"
+      [longitude]="marker.longitude"
+    >
+      <agm-info-window>
+        <h4>{{marker.title}}</h4>
+        <span class="date">{{marker.date | amDateFormat:'l'}}</span>
+        <p style="max-width: 300px;">{{marker.snippit}}</p>
+        <button (click)="onShowNote(marker)">Show Note</button>
+      </agm-info-window>
+    </agm-marker>
+    <!-- Need to figure out how to get place icons in markers -->
+    <agm-marker
+      *ngFor="let marker of placeMarkers"
+      [latitude]="marker.latitude"
+      [longitude]="marker.longitude"
+    >
+      <agm-info-window>
+        <h4>{{marker.title}}</h4>
+        <span class="date">{{marker.date | amDateFormat:'l'}}</span>
+        <p style="max-width: 300px;">{{marker.snippit}}</p>
+        <button (click)="onShowNote(marker)">Show Note</button>
+      </agm-info-window>
+    </agm-marker>
+  </agm-map>
+
+</div>

@@ -1,0 +1,192 @@
+<div>
+
+  <!-- Mobile View -->
+  <div *ngIf="device === 'mobile'" class="mobile">
+
+    <!-- Name, Date & Map settings -->
+    <div *ngIf="activeView === 'edit-name'" [class]="'app-container' + (mode === 'new' ? ' new' : ' edit')">
+
+      <header>
+        <h2 *ngIf="note">{{mode === 'edit' ? note.name : 'New Note'}}</h2>
+        <span class="button-bar">
+        <button class="icon" (click)="activeView = 'edit-note'"><svg><use xlink:href="assets/symbols.svg#arrow-forward">
+          <title>Next</title>
+        </use></svg></button>
+      </span>
+      </header>
+
+      <div *ngIf="note" class="content name-edit">
+
+        <div class="name">
+          <label *ngIf="mode === 'edit'" for="noteName" style="font-size: smaller;">Name</label>
+          <input type="text" id="noteName" [(ngModel)]="note.name" maxlength="40" placeholder="Name for your note" tabindex="1">
+          <span style="font-size: smaller;">
+          Maximum 40 characters (<span [class]="note.name.length < 30 ? 'char-count' : 'char-count-close'">{{40 - note.name.length}}</span> remaining)
+        </span>
+        </div>
+
+        <div class="date">{{note.Created_date | amDateFormat:'LLLL'}}</div>
+
+        <div class="geocoords">
+          <svg class="icon-tiny location-icon" style="vertical-align: text-bottom;"><use xlink:href="assets/symbols.svg#my-location"></use></svg>
+          {{note.geocode.lat +', '+note.geocode.lng}}
+          <svg class="icon-small action-icon" (click)="updateCoordinates()"><use xlink:href="assets/symbols.svg#my-location"></use></svg>
+        </div>
+
+        <div class="place">
+          <svg *ngIf="!hasPlace(note)" class="icon-small"><use xlink:href="assets/symbols.svg#place"></use></svg>
+          <img *ngIf="hasPlace(note)" [src]="note.place.icon" class="icon-small" style="vertical-align:unset;" />
+          <span [class]="hasPlace(note) ? 'has-place' : 'no-place'" id="placeName">{{note.place && note.place._id ? note.place.name : 'Drag marker or click the button to add a place'}}</span>
+          <span style="float:right;">
+          <button *ngIf="hasPlace(note)" (click)="removePlace()" style="margin-right: 10px;">Remove</button>
+          <button *ngIf="hasPlace(note)" (click)="findPlace()" tabindex="2">Change</button>
+          <button *ngIf="!hasPlace(note)" (click)="findPlace()" tabindex="2">Lookup Places</button>
+        </span>
+        </div>
+
+        <agm-map
+          [zoom]="14"
+          [latitude]="note.geocode.lat"
+          [longitude]="note.geocode.lng"
+          (mapReady)="onMapReady($event)"
+        >
+          <agm-marker
+            [latitude]="note.geocode.lat"
+            [longitude]="note.geocode.lng"
+            [draggable]="markerDraggable"
+          >
+          </agm-marker>
+        </agm-map>
+
+      </div>
+
+      <div class="navigation">
+        <a (click)="closeNote()">Cancel</a>
+        <a class="action-link" (click)="activeView = 'edit-note'">Next</a>
+      </div>
+
+    </div>
+
+    <!-- Note input -->
+    <div class="app-container" *ngIf="activeView === 'edit-note'">
+
+      <header>
+        <h2>{{mode === 'edit' ? note.name : 'New Note'}}</h2>
+        <span class="button-bar">
+        <button class="icon" (click)="activeView = 'edit-name'"><svg><use xlink:href="assets/symbols.svg#arrow-back">
+          <title>Back</title>
+        </use></svg></button>
+        <button class="icon" (click)="saveNote()"><svg><use xlink:href="assets/symbols.svg#save">
+          <title>Save Note</title>
+        </use></svg></button>
+      </span>
+      </header>
+
+      <div class="content note-edit">
+        <textarea id="noteNote" [(ngModel)]="note.note" placeholder="Your note"></textarea>
+      </div>
+
+      <div class="navigation">
+        <a (click)="closeNote()">Cancel</a>
+        <a class="action-link" (click)="saveNote()">Save</a>
+        <a class="action-link" (click)="activeView = 'edit-name'">Back</a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Desktop View -->
+  <div *ngIf="device === 'desktop'" class="app-container desktop">
+
+    <header>
+      <h2 *ngIf="note">{{mode === 'edit' ? note.name : 'New Note'}}</h2>
+      <span class="button-bar">
+        <button class="icon action-icon" (click)="closeNote()"><svg><use xlink:href="assets/symbols.svg#close-note">
+          <title>Cancel Edit</title>
+        </use></svg></button>
+        <button class="icon action-icon" (click)="saveNote()"><svg><use xlink:href="assets/symbols.svg#save">
+          <title>Save Note</title>
+        </use></svg></button>
+      </span>
+    </header>
+
+    <div *ngIf="note" class="content note-edit">
+
+      <div class="name">
+        <label for="noteName">Name</label>
+        <input type="text" id="noteName" [(ngModel)]="note.name" maxlength="40" placeholder="Name for your note" tabindex="1">
+        <span class="input-info"><span class="char-count">{{note.name.length}}</span> (40 character limit)</span>
+      </div>
+
+      <div class="date">{{note.Created_date | amDateFormat:'LLLL'}}</div>
+
+      <div class="geocoords">
+        <label for="geocords">Location:</label>
+        <span id="geocords" class="link">{{note.geocode.lat +', '+note.geocode.lng}}</span>
+        <svg class="icon-small action-icon" (click)="updateCoordinates()"><use xlink:href="assets/symbols.svg#my-location"></use></svg>
+      </div>
+
+      <div class="place">
+        <label *ngIf="!hasPlace(note)" for="placeName">
+          <svg class="icon-small"><use xlink:href="assets/symbols.svg#place"></use></svg>
+        </label>
+        <label *ngIf="hasPlace(note)" for="placeName">
+          <img [src]="note.place.icon" width="24" height="24" />
+        </label>
+        <span [class]="note.place && note.place._id ? 'has-place' : 'no-place'" id="placeName">{{note.place && note.place._id ? note.place.name : 'Drag marker or click the button to add a place'}}</span>
+        <span style="float:right;">
+          <button class="small" *ngIf="note.place && note.place._id" (click)="removePlace()" style="margin-right: 10px;">Remove Place</button>
+          <button class="small" (click)="findPlace()" tabindex="2">Lookup Places</button>
+        </span>
+      </div>
+      <agm-map
+        [zoom]="14"
+        [latitude]="note.geocode.lat"
+        [longitude]="note.geocode.lng"
+        (mapReady)="onMapReady($event)"
+      >
+        <agm-marker
+          [latitude]="note.geocode.lat"
+          [longitude]="note.geocode.lng"
+          [draggable]="markerDraggable"
+        >
+        </agm-marker>
+      </agm-map>
+      <div class="note-input">
+        <textarea id="noteNote" [(ngModel)] ="note.note" placeholder="Your note" tabindex="3"></textarea>
+      </div>
+
+    </div>
+
+    <div class="navigation">
+      <a (click)="closeNote()">Cancel</a>
+      <a class="action-link" (click)="saveNote()">Save</a>
+    </div>
+
+  </div>
+
+  <app-places-dialog
+    *ngIf="showPlacesDialog"
+    [places]="places"
+    [showMoreButton]="showMoreButton"
+    [placeName]="placeName"
+    (close)="showPlacesDialog = false"
+    (save)="onPlaceSelect($event)"
+    (filter)="onPlacesFilter($event)"
+    (showMore)="onShowMorePlaces()"
+  ></app-places-dialog>
+
+  <app-modal-dailog
+    *ngIf="showMessage"
+    [modalType]="'notify'"
+    (close)="showMessage = false">
+    <div class="modal-title">{{messageTitle}}</div>
+    <div class="modal-body">
+      <p [innerHTML]="messageBody"></p>
+    </div>
+  </app-modal-dailog>
+
+  <div class="loading-mask" *ngIf="isLoading"><span>{{loadingMessage}}</span></div>
+
+</div>

@@ -1,0 +1,20 @@
+<div class="content">
+
+  <agm-map
+    [latitude]="note.geocode.lat"
+    [longitude]="note.geocode.lng"
+    [zoom]="14"
+  >
+    <agm-marker
+      *ngIf="note"
+      [latitude]="note.geocode.lat"
+      [longitude]="note.geocode.lng"
+    >
+      <agm-info-window>
+        <span style="font-weight: bold;">{{ note.Created_date | amDateFormat:'LLLL' }}</span>
+        <p style="max-width: 300px; max-height: 400px; overflow-y: auto; white-space: pre-wrap">{{note.note}}</p>
+      </agm-info-window>
+    </agm-marker>
+  </agm-map>
+
+</div>

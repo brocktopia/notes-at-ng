@@ -1,0 +1,75 @@
+<div class="app-container">
+
+  <header>
+    <h2 *ngIf="!!notebook">{{notebook.name}}</h2>
+    <span class="button-bar">
+      <button class="icon delete-notebook" (click)="deleteNotebook()"><svg><use xlink:href="assets/symbols.svg#delete-note"><title>Delete Notebook</title></use></svg></button>
+      <button class="icon edit-notebook" (click)="editNotebook()"><svg><use xlink:href="assets/symbols.svg#edit-note"><title>Edit Notebook</title></use></svg></button>
+      <button class="icon show-map" *ngIf="activeView === 'notebook'" (click)="showMap()"><svg><use xlink:href="assets/symbols.svg#map"><title>Show Map</title></use></svg></button>
+      <button class="icon show-list" *ngIf="activeView === 'map'" (click)="closeNotebookMap()"><svg><use xlink:href="assets/symbols.svg#list"><title>Show Note List</title></use></svg></button>
+      <button class="mobile-only icon add-note" (click)="addNote('mobile')"><svg><use xlink:href="assets/symbols.svg#add-note"><title>Add New Note</title></use></svg></button>
+      <button class="desktop-only icon add-note" (click)="addNote('desktop')"><svg><use xlink:href="assets/symbols.svg#add-note"><title>Add New Note</title></use></svg></button>
+    </span>
+  </header>
+
+  <div class="content" [hidden]="activeView === 'map'">
+    <ul class="notebook" *ngIf="(notes && notes.length > 0)">
+
+      <li
+        *ngFor="let note of notes"
+        class="note-item"
+        (click)="noteSelect(note)"
+      >
+        <span class="title">{{note.name}}</span><br/>
+        <span class="date">{{note.Created_date | amDateFormat:'ddd l h:mm:ss a'}}</span>
+        <span *ngIf="!note.place || !note.place.name" class="geocoords">
+          <svg class="icon-tiny location-icon"><use xlink:href="assets/symbols.svg#my-location"></use></svg>
+          {{(note.geocode.lat ? note.geocode.lat.toFixed(5) : 'Unknown') + ', ' + (note.geocode.lng ? note.geocode.lng.toFixed(5) : 'Unknown')}}
+        </span>
+        <span *ngIf="note.place && note.place.name" class="place">
+          <svg class="icon-tiny place-icon"><use xlink:href="assets/symbols.svg#place"></use></svg>
+          {{note.place.name}}
+        </span>
+        <br clear="all"/>
+        <span class="note">{{note.note.length > 84 ? note.note.substr(0,84) + '...' : note.note}}</span>
+      </li>
+
+    </ul>
+    <div *ngIf="(notes && notes.length === 0)" class="notebook-message">No notes in this notebook.</div>
+  </div>
+
+  <app-notebook-map
+    *ngIf="showMapInit"
+    [hidden]="activeView === 'notebook'"
+    [notes]="notes"
+    (showNote)="noteSelect($event)"
+  ></app-notebook-map>
+
+  <div class="navigation">
+    <a routerLink="/home">Home</a>
+    <a class="notebooks-link" routerLink="/notebooks">Notebooks</a>
+  </div>
+
+  <app-notebook-edit
+    *ngIf="showEditNotebook"
+    [notebook]="notebook"
+    mode="edit"
+    (close)="showEditNotebook = false"
+    (save)="saveNotebook($event)"
+  ></app-notebook-edit>
+
+  <app-modal-dailog
+    *ngIf="showConfirmModal"
+    [modalType]="'confirm'"
+    (close)="showConfirmModal = false;"
+    (confirm)="confirmNotebookDelete()"
+  >
+    <div class="modal-title">Confirm Notebook Delete</div>
+    <div class="modal-body">
+      Are you sure you want to delete this notebook? <span [innerHTML]="notebookDeleteMsg"></span> This can not be undone.
+    </div>
+  </app-modal-dailog>
+
+  <div class="loading-mask" *ngIf="isLoading"><span>{{loadingMessage}}</span></div>
+
+</div>

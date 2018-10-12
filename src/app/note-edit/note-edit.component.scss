@@ -1,0 +1,132 @@
+.desktop {
+  agm-map {
+    height: 150px;
+  }
+  span.no-place {
+    font-size: smaller;
+    color: #999999;
+  }
+  span.has-place {
+    display: inline-block;
+    max-width: 340px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: text-bottom;
+  }
+  .content {
+    padding: 20px 20px 8px;
+    display: grid;
+    grid-template-rows: 45px 30px 35px 35px 155px auto;
+  }
+  .note-input {
+    flex: auto;
+  }
+  #noteName {
+    margin: 0 8px;
+  }
+  #noteNote {
+    height: 100%;
+  }
+  .geocoords, .place {
+    height: 30px;
+    line-height: 30px;
+    width: 100%;
+  }
+  .place button {
+    vertical-align: top;
+  }
+  .place svg {
+    fill: #ed453b;
+  }
+  .content > * {
+    margin-bottom: 10px;
+  }
+  .content > *:last-child {
+    margin-bottom: 0;
+  }
+  .content input {
+    width: 60%;
+  }
+  .content textarea {
+    width: 100%;
+    heigth: 100%;
+    overflow: auto;
+  }
+  .input-info {
+    font-size: smaller;
+  }
+  .char-count {
+    color: orangered;
+  }
+}
+.mobile {
+  agm-map {
+    height: 100%;
+  }
+  .app-container.edit .name-edit {
+    display: grid;
+    grid-template-rows: 120px 40px 60px 60px auto;
+  }
+  .app-container.new .name-edit {
+    display: grid;
+    grid-template-rows: 90px 40px 60px 60px auto;
+  }
+  #noteName {
+    font-size: 1.8rem;
+  }
+  .content {
+    padding: 20px;
+  }
+  span.no-place {
+    font-size: smaller;
+    color: #999999;
+  }
+  span.has-place {
+    display: inline-block;
+    max-width: 340px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: text-bottom;
+  }
+  #noteNote {
+    height: 100%;
+    font-size: 1.8rem;
+  }
+  .geocoords {
+    color: #4e7eef;
+    fill: #4e7eef;
+  }
+  .geocoords, .place {
+    height: 50px;
+    line-height: 50px;
+    width: 100%;
+  }
+  .place button {
+    vertical-align: top;
+  }
+  .place svg {
+    fill: #ed453b;
+  }
+  .content > * {
+    margin-bottom: 10px;
+  }
+  .content > *:last-child {
+    margin-bottom: 0;
+  }
+  .content input {
+    width: 100%;
+  }
+  .content textarea {
+    width: 100%;
+    heigth: 100%;
+    overflow: auto;
+  }
+  .char-count {
+    color: darkgreen;
+  }
+  .char-count-close {
+    color: orangered;
+  }
+}
