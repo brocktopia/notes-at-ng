@@ -20,7 +20,7 @@
 
 ## Configuration
 
-You will need to set your Google API Key in [./src/app/google-maps-config.js](src/app/google-maps-config.js).
+You will need to set your Google API Key in [./src/app/google-maps-config.ts](src/app/google-maps-config.ts).
 ```js
 const GoogleMapsConfig = {
   key: 'your-google-api-key',
