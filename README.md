@@ -3,10 +3,6 @@
 > A note taking app that retrieves and stores location data for each note. This is a fork of a Vue.js MEVN application 
 [github.com/brocktopia/notes-at](https://github.com/brocktopia/notes-at) implemented as a MEAN application using Angular 6.
 
-## testing branch
-
-This branch sits on top of the decompose branch and implements testing using vue-test-utils &amp; vue-jest with Jest as the test runner. I wanted to break the app into more atomic units before implementing testing. See notes below.
-
 ## Dependencies
 
 **Server-side**
