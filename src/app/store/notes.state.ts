@@ -63,12 +63,12 @@ export class NotesState {
 
   @Action(GetNotes)
   getNotes(ctx: StateContext<NotesStateModel>, action) {
-    console.log(`notes.state.getNotes() notebook_id: ${action.notebook_id}`);
+    //console.log(`notes.state.getNotes() notebook_id: ${action.notebook_id}`);
     return this.notebooksService.getNotes(action.notebook_id)
       .pipe(
         tap((data) => {
-          console.log('notes.state.getNotes() data');
-          console.dir(data);
+          //console.log('notes.state.getNotes() data');
+          //console.dir(data);
           const state = ctx.getState();
           ctx.setState({
             ...state,
@@ -83,12 +83,10 @@ export class NotesState {
 
   @Action(GetNote)
   getNote(ctx: StateContext<NotesStateModel>, action) {
-    console.log(`notes.state.getNote() note_id: ${action.note_id}`);
+    //console.log(`notes.state.getNote() note_id: ${action.note_id}`);
     return this.notebooksService.getNote(action.note_id)
       .pipe(
         tap((data) => {
-          console.log('notes.state.getNote() data');
-          console.dir(data);
           const state = ctx.getState();
           ctx.setState({
             ...state,
@@ -102,12 +100,10 @@ export class NotesState {
 
   @Action(CreateNote)
   createNote(ctx: StateContext<NotesStateModel>, action) {
-    console.log(`notes.state.createNote() note name: ${action.note.name}`);
+    //console.log(`notes.state.createNote() note name: ${action.note.name}`);
     return this.notebooksService.createNote(action.note)
       .pipe(
         tap((data) => {
-            console.log('notes.state.createNote() data');
-            console.dir(data);
             const state = ctx.getState();
             state.all.unshift(data);
             ctx.setState({
@@ -122,12 +118,10 @@ export class NotesState {
 
   @Action(UpdateNote)
   updateNote(ctx: StateContext<NotesStateModel>, action) {
-    console.log(`notes.state.updateNote() note name: ${action.note.name}`);
+    //console.log(`notes.state.updateNote() note name: ${action.note.name}`);
     return this.notebooksService.updateNote(action.note)
       .pipe(
         tap((data) => {
-            console.log('notes.state.updateNote() data');
-            console.dir(data);
             const state = ctx.getState();
             if (state.all && state.all.length > 0) {
               // swap out note in all[]
@@ -150,12 +144,10 @@ export class NotesState {
 
   @Action(DeleteNote)
   deleteNote(ctx: StateContext<NotesStateModel>, action) {
-    console.log(`notes.state.deleteNote() note id: ${action.note_id}`);
+    //console.log(`notes.state.deleteNote() note id: ${action.note_id}`);
     return this.notebooksService.deleteNote(action.note_id)
       .pipe(
         tap((data) => {
-            console.log('notes.state.deleteNote() data');
-            console.dir(data);
             if (data.success) {
               const state = ctx.getState();
               if (state.all && state.all.length > 0) {
