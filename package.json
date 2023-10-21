@@ -27,7 +27,7 @@
     "core-js": "^2.6.4",
     "express": "^4.16.4",
     "moment": "^2.29.4",
-    "mongoose": "^5.7.5",
+    "mongoose": "^5.13.20",
     "ngx-moment": "^3.3.0",
     "rxjs": "~6.3.3",
     "zone.js": "^0.8.29"
