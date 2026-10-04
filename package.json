@@ -26,7 +26,7 @@
     "@ngxs/store": "^3.3.4",
     "core-js": "^2.6.4",
     "express": "^4.22.1",
-    "moment": "^2.29.4",
+    "moment": "^2.31.0",
     "mongoose": "^6.13.10",
     "ngx-moment": "^3.3.0",
     "rxjs": "~6.3.3",
